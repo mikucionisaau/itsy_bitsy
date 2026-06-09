@@ -9,7 +9,7 @@ project(itsy.bitsy.benchmarks VERSION 1.0.0 LANGUAGES C CXX DESCRIPTION "A proje
 FetchContent_Declare(
 	googlebenchmark
 	GIT_REPOSITORY https://github.com/google/benchmark.git
-	GIT_TAG v1.9.4
+	GIT_TAG v1.9.5
 )
 FetchContent_GetProperties(googlebenchmark)
 
