@@ -768,18 +768,17 @@ namespace bitsy
 		reference
 		emplace_back(_Args&&... __args)
 		{
-			size_type __starting_size = this->size();
-			if (__starting_size == 0)
-				{
-					return this->_M_emplace_back_unchecked_0(::std::forward<_Args>(__args)...);
-				}
-
+			size_type __starting_size     = this->size();
 			size_type __starting_capacity = this->capacity();
 			if (__starting_size == __starting_capacity)
 				{
-					// make room first
+					// make room first (also handles size==0, capacity==0)
 					_S_grow_storage_of_size_with_strategy(
 					     this->get_allocator(), this->_M_buf_or_ptr, __starting_size);
+				}
+			if (__starting_size == 0)
+				{
+					return this->_M_emplace_back_unchecked_0(::std::forward<_Args>(__args)...);
 				}
 
 			size_type __desired_size = __starting_size + 1;
@@ -825,19 +824,19 @@ namespace bitsy
 		reference
 		emplace_front(_Args&&... __args)
 		{
-			size_type __starting_size = this->size();
+			size_type __starting_size     = this->size();
+			size_type __starting_capacity = this->capacity();
+			if (__starting_size == __starting_capacity)
+				{
+					// make room first (also handles size==0, capacity==0)
+					_S_grow_storage(this->get_allocator(), this->_M_buf_or_ptr);
+				}
 			if (__starting_size == 0)
 				{
 					return this->_M_emplace_back_unchecked_0(::std::forward<_Args>(__args)...);
 				}
 
-			size_type __starting_capacity  = this->capacity();
 			__base_pointer __storage_first = this->_M_storage_pointer();
-			if (__starting_size == __starting_capacity)
-				{
-					// make room first
-					__storage_first = _S_grow_storage(this->get_allocator(), this->_M_buf_or_ptr);
-				}
 
 			size_type __desired_size      = __starting_size + 1;
 			__base_pointer __storage_last = __storage_first + bit_to_element_size<__base_value_type>(__desired_size);
@@ -932,7 +931,7 @@ namespace bitsy
 					// make room first
 					difference_type __preserved_distance = __storage_it - __storage_first;
 					__storage_first                      = _S_grow_storage_of_size_with_strategy(
-					                          this->get_allocator(), this->_M_buf_or_ptr, __starting_size);
+                              this->get_allocator(), this->_M_buf_or_ptr, __starting_size);
 					__storage_it   = __storage_first + __preserved_distance;
 					__storage_last = __storage_first + bit_to_element_size<__base_value_type>(__desired_size);
 				}
