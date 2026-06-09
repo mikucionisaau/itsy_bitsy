@@ -102,7 +102,7 @@ option(ITSY_BITSY_EXAMPLES "Enable build of examples" OFF)
 # ztd.idk
 FetchContent_Declare(ztd.idk
 	GIT_REPOSITORY https://github.com/soasis/idk.git
-	GIT_TAG main)
+	GIT_TAG d831172)
 FetchContent_MakeAvailable(ztd.idk)
 
 # # itsy.bitsy Target

@@ -127,7 +127,8 @@ namespace bitsy
 			return __bval;
 		}
 
-		explicit constexpr operator bool() const noexcept
+		explicit constexpr
+		operator bool() const noexcept
 		{
 			return value();
 		}
@@ -279,7 +280,8 @@ namespace bitsy
 		}
 
 		// conversions
-		constexpr operator bool() const noexcept
+		constexpr
+		operator bool() const noexcept
 		{
 			return this->value();
 		}
@@ -352,7 +354,7 @@ namespace bitsy
 		// swap
 		constexpr friend void
 		swap(bit_reference __left, bit_reference __right) noexcept(
-		     ::std::is_nothrow_swappable_v<__word_type>&& ::std::is_nothrow_swappable_v<__mask_type>)
+		     ::std::is_nothrow_swappable_v<__word_type> && ::std::is_nothrow_swappable_v<__mask_type>)
 		{
 			if (__left.value() == __right.value())
 				{
@@ -539,7 +541,8 @@ namespace bitsy
 			return ::std::move(this->_M_base_it);
 		}
 
-		explicit constexpr operator bool() const noexcept
+		explicit constexpr
+		operator bool() const noexcept
 		{
 			return this->_M_is_alive();
 		}
@@ -559,7 +562,7 @@ namespace bitsy
 		// swap
 		friend constexpr void
 		swap(bit_pointer& __left, bit_pointer& __right) noexcept(
-		     ::std::is_nothrow_swappable_v<_Pointer>&& ::std::is_nothrow_swappable_v<size_type>)
+		     ::std::is_nothrow_swappable_v<_Pointer> && ::std::is_nothrow_swappable_v<size_type>)
 		{
 			const bool __left_alive  = __left._M_is_alive();
 			const bool __right_alive = __right._M_is_alive();
@@ -678,7 +681,7 @@ namespace bitsy
 				{
 					if constexpr (::ztd::is_to_addressable_v<iterator_type>)
 						{
-							return ::ztd::idk_adl::adl_to_address(this->_M_base_it) != nullptr;
+							return ::ztd::to_address(this->_M_base_it) != nullptr;
 						}
 					else
 						{
@@ -1039,7 +1042,7 @@ namespace bitsy
 		// swap
 		friend constexpr void
 		swap(bit_iterator& __left, bit_iterator& __right) noexcept(
-		     ::std::is_nothrow_swappable_v<iterator_type>&& ::std::is_nothrow_swappable_v<size_type>)
+		     ::std::is_nothrow_swappable_v<iterator_type> && ::std::is_nothrow_swappable_v<size_type>)
 		{
 			::ztd::ranges::ranges_adl::adl_swap(__left._M_base_it, __right._M_base_it);
 			::ztd::ranges::ranges_adl::adl_swap(__left._M_pos, __right._M_pos);
@@ -1048,7 +1051,7 @@ namespace bitsy
 		// iter_swap
 		friend constexpr void
 		iter_swap(bit_iterator& __left, bit_iterator& __right) noexcept(::std::is_nothrow_swappable_v<reference> // cf
-		          && ::std::is_nothrow_swappable_v<reference>)
+		                                                                && ::std::is_nothrow_swappable_v<reference>)
 		{
 			reference __left_ref  = *__left;
 			reference __right_ref = *__right;
